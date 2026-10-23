@@ -1,0 +1,8 @@
+Built-in ImageGen — edit mode. Reference 1: existing lynx artwork; references 2–4: PhotoCraft, FilmCraft, PdfCraft suite icons.
+
+Use case: precise-object-edit.
+Asset type: original engraved animal artwork for the existing ArtCraft Détourage IA macOS application icon.
+Image 1 is the edit target: current lynx engraving on copper orange. Images 2, 3 and 4 are style references from the ArtCraft suite only.
+Replace the lynx entirely with a MANUL / PALLAS'S CAT (Otocolobus manul). Preserve the black ink and warm ivory natural-history woodcut engraving aesthetic and copper-orange #D86D35 background. Closely match the suite references: bold clean black hatching, flat ivory fills, strong outlined silhouette, no photoreal shading.
+The manul must be immediately recognizable: very broad low rounded head, small rounded ears set low and wide at the sides of the head, NO pointed lynx ears and NO long ear tufts, exceptionally dense fluffy cheek ruff, short flattened muzzle, round pupils, calm slightly grumpy expression, subtle dark markings on forehead and cheeks. Front-facing head and fluffy upper chest portrait centered. Entire head and both ears fully visible with comfortable margin above, broad chest cropped at bottom edge, strong readability as a small app icon.
+Output one completely OPAQUE square artwork, edge-to-edge copper-orange background, 1024x1024. Native icon packaging will separately apply the rounded-square mask and outer transparent margin. Keep ALL interior pixels opaque including eyes, forehead, fur and backdrop: absolutely no holes, no transparent pixels. No words, lettering, badges, tools, ornamental frame, gradients, glow, shadows, 3D or mockup. Only the engraved manul and clean flat orange backdrop.

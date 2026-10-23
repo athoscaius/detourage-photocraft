@@ -1,0 +1,18 @@
+{
+  "engineVersion": "1.2.0",
+  "model": "BiRefNet-matting-epoch_100.onnx",
+  "modelSha256": "6065d27c615ea27308f5b88598dd8db116eb07436c7a323ca40d13b2866c309e",
+  "modelURL": "https://github.com/ZhengPeng7/BiRefNet/releases/download/v1/BiRefNet-matting-epoch_100.onnx",
+  "modelCard": "https://huggingface.co/ZhengPeng7/BiRefNet-matting",
+  "license": "MIT",
+  "inputSize": [
+    1024,
+    1024
+  ],
+  "runtime": "CPython 3.13.17, python-build-standalone 20261021, aarch64-apple-darwin",
+  "runtimeSha256": "8dc60610a82f1e73be7faf964383e02520f95f6e39592a5c37c3809f5a7b798e",
+  "dependenciesLock": "requirements-matting.lock",
+  "inferenceProvider": "CPUExecutionProvider",
+  "threads": 4,
+  "telemetry": false
+}
