@@ -1,10 +1,10 @@
-# ArtCraft Détourage IA
+# Détourage PhotoCraft
 
-Compagnon macOS indépendant pour détourer une personne, ses accessoires ou un sujet dans PhotoCraft. Masque doux, transparences et cheveux, moteur BiRefNet-matting local ; icône manul dans un style gravé. Projet personnel, non officiel et non affilié à ArtCraft.
+Compagnon macOS indépendant pour détourer une personne, ses accessoires ou un sujet dans PhotoCraft. Masque doux, transparences et cheveux, moteur BiRefNet-matting local ; icône du chat de Pallas sur fond vert. Projet personnel, non officiel et non affilié à ArtCraft.
 
 ## Installer
 
-Télécharger le **DMG arm64** dans les Releases, l’ouvrir et glisser l’application dans **Applications**. Lancer le compagnon puis **Ouvrir PhotoCraft**. Si PhotoCraft était déjà ouvert, enregistrer puis quitter et rouvrir PhotoCraft une fois.
+Télécharger le [DMG Apple Silicon](https://github.com/athoscaius/detourage-photocraft/releases/latest/download/Detourage-PhotoCraft-1.3.2-arm64.dmg), l’ouvrir et glisser l’application dans **Applications**. Lancer le compagnon puis **Ouvrir PhotoCraft**. Si PhotoCraft était déjà ouvert, enregistrer puis quitter et rouvrir PhotoCraft une fois.
 
 Configuration : **Mac Apple Silicon, macOS 14+**, PhotoCraft avec son protocole de contrôle public, Python 3 des outils de ligne de commande Apple pour le pont. Le modèle et le runtime d’inférence sont inclus dans le DMG ; aucune clé API ni connexion réseau n’est nécessaire au détourage. L’app occupe environ 1,2 Go. Le calcul peut dépasser une minute selon la charge du Mac.
 
@@ -38,6 +38,10 @@ La construction nécessite les outils Xcode, une connexion réseau initiale et e
 - [PhotoCraft](https://github.com/storytold/photocraft) : application hôte, non incluse.
 - [BiRefNet-matting](https://huggingface.co/ZhengPeng7/BiRefNet-matting) : modèle officiel sous MIT, notice dans `source/BiRefNet-LICENSE.txt`.
 - Runtime [python-build-standalone](https://github.com/astral-sh/python-build-standalone), notices conservées dans `source/runtime-licenses/` ; autres dépendances sous leurs licences propres.
-- Icône originale créée avec ImageGen intégré ; prompt dans `assets/MANUL-PROMPT.txt`.
+- Icône du chat de Pallas fournie par l’utilisateur, source `assets/provided-icon.png`.
 
 Aucune licence libre supplémentaire n’est accordée au code propre à ce projet ; les composants tiers conservent leurs licences respectives.
+
+## Version 1.3.2
+
+Nom de l’application : **Détourage PhotoCraft**. Icône fournie par l’utilisateur. Les fonctions, le moteur et la connexion de la version précédente sont conservés. La mise à jour migre l’ancien nom de l’application et conserve sa configuration.

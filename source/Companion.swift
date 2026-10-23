@@ -150,13 +150,43 @@ final class CompanionDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         NSApplication.shared.setActivationPolicy(.regular)
-        if let iconURL = Bundle.main.url(forResource: "AppIcon-v3", withExtension: "png"),
+        if let iconURL = Bundle.main.url(forResource: "AppIcon-v5", withExtension: "png"),
            let icon = NSImage(contentsOf: iconURL) {
             NSApplication.shared.applicationIconImage = icon
         }
         makeMenuBar()
         makeWindow()
         makeStatusItem()
+        if CommandLine.arguments.contains("--preview-loading") {
+            showWindow(nil)
+            setBusy(true)
+            showStatus("Détourage en cours…", detail: "Gardez la même image et le même calque actifs pendant le calcul.")
+            if let index = CommandLine.arguments.firstIndex(of: "--preview-output"), index + 1 < CommandLine.arguments.count {
+                let output = CommandLine.arguments[index + 1]
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
+                    guard let self = self, let view = self.window.contentView else { return }
+                    assert(self.busy && self.loadingTimer != nil && !self.loadingRow.isHidden)
+                    if CommandLine.arguments.contains("--preview-completed") {
+                        self.setBusy(false)
+                        self.showCompletedLoading()
+                        self.showStatus("Sélection fine prête", detail: "Vous pouvez poursuivre vos retouches dans PhotoCraft.")
+                        assert(self.loadingTimer == nil && self.progress.completed && !self.loadingRow.isHidden)
+                    } else if CommandLine.arguments.contains("--preview-error") {
+                        self.setBusy(false)
+                        self.showStatus("Action à vérifier", detail: "La photo a été modifiée pendant le calcul. Aucun résultat n’a été appliqué.", error: true)
+                        assert(self.loadingTimer == nil && self.loadingRow.isHidden)
+                    }
+                    view.layoutSubtreeIfNeeded()
+                    if let bitmap = view.bitmapImageRepForCachingDisplay(in: view.bounds) {
+                        view.cacheDisplay(in: view.bounds, to: bitmap)
+                        try? bitmap.representation(using: .png, properties: [:])?.write(to: URL(fileURLWithPath: output))
+                    }
+                    self.setBusy(false)
+                    NSApplication.shared.terminate(nil)
+                }
+            }
+            return
+        }
         do {
             try prepareDirectories()
             showStatus("Prêt", detail: "Ouvrez votre image dans PhotoCraft, puis choisissez le résultat souhaité.")
@@ -218,9 +248,9 @@ final class CompanionDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
         let appItem = NSMenuItem()
         menuBar.addItem(appItem)
         let appMenu = NSMenu()
-        appMenu.addItem(withTitle: "Afficher Détourage IA", action: #selector(showWindow(_:)), keyEquivalent: "1").target = self
+        appMenu.addItem(withTitle: "Afficher Détourage PhotoCraft", action: #selector(showWindow(_:)), keyEquivalent: "1").target = self
         appMenu.addItem(.separator())
-        appMenu.addItem(withTitle: "Quitter Détourage IA", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
+        appMenu.addItem(withTitle: "Quitter Détourage PhotoCraft", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
         appItem.submenu = appMenu
         NSApplication.shared.mainMenu = menuBar
     }
@@ -228,7 +258,7 @@ final class CompanionDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
     private func makeStatusItem() {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
         statusItem.button?.image = NSImage(systemSymbolName: "person.crop.rectangle.badge.plus", accessibilityDescription: "Détourage IA")
-        statusItem.button?.toolTip = "ArtCraft · Détourage IA"
+        statusItem.button?.toolTip = "Détourage PhotoCraft"
         let menu = NSMenu()
         menu.addItem(withTitle: "Afficher le compagnon", action: #selector(showWindow(_:)), keyEquivalent: "").target = self
         menu.addItem(.separator())
@@ -274,7 +304,7 @@ final class CompanionDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
     private func makeWindow() {
         window = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 640, height: 580),
             styleMask: [.titled, .closable, .miniaturizable, .resizable], backing: .buffered, defer: false)
-        window.title = "ArtCraft · Détourage IA"
+        window.title = "Détourage PhotoCraft"
         window.appearance = NSAppearance(named: .darkAqua)
         window.backgroundColor = EditorPalette.chrome
         window.contentMinSize = NSSize(width: 600, height: 580)
@@ -473,7 +503,7 @@ final class CompanionDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
             loadingStarted = nil
             loadingRow.isHidden = true
         }
-        statusItem.button?.toolTip = value ? "Détourage IA · opération en cours" : "ArtCraft · Détourage IA"
+        statusItem.button?.toolTip = value ? "Détourage PhotoCraft · opération en cours" : "Détourage PhotoCraft"
     }
 
     private func updateLoadingClock() {

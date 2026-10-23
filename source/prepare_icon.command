@@ -6,7 +6,7 @@ trap 'rm -rf "$ICON_WORK"' EXIT
 ICON_SET="$ICON_WORK/AppIcon.iconset"
 mkdir -p "$ICON_SET"
 xcrun swift -module-cache-path "$ICON_WORK/cache" "$PACKAGE_DIR/source/PackageIcon.swift" \
-  "$PACKAGE_DIR/assets/manul-opaque.png" "$PACKAGE_DIR/assets/app-icon.png"
+  "$PACKAGE_DIR/assets/provided-icon.png" "$PACKAGE_DIR/assets/app-icon.png"
 for LOGICAL_SIZE in 16 32 128 256 512; do
   sips -z "$LOGICAL_SIZE" "$LOGICAL_SIZE" "$PACKAGE_DIR/assets/app-icon.png" --out "$ICON_SET/icon_${LOGICAL_SIZE}x${LOGICAL_SIZE}.png" >/dev/null
   RETINA_SIZE=$((LOGICAL_SIZE * 2))
